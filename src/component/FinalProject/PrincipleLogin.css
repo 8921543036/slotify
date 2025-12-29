@@ -1,0 +1,177 @@
+/* ---------------- MODAL OVERLAY ---------------- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* ---------------- MODAL CONTENT ---------------- */
+.modal-content {
+  background: #fff;
+  width: 400px;
+  max-width: 90%;
+  padding: 30px 25px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  position: relative;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* ---------------- MODAL HEADER ---------------- */
+.modal-header h2 {
+  margin: 0 0 5px;
+  font-size: 24px;
+  color: #333;
+}
+
+.modal-header p {
+  font-size: 14px;
+  color: #555;
+}
+
+/* ---------------- CLOSE BUTTON ---------------- */
+.modal-close-icon {
+  position: absolute;
+  top: 12px;
+  right: 15px;
+  font-size: 24px;
+  color: #333;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.modal-close-icon:hover {
+  color: #ff4d4f;
+}
+
+/* ---------------- FORM ---------------- */
+.modal-form {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group {
+  margin-bottom: 15px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border 0.2s;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #4ba3ff;
+}
+
+/* ---------------- FORM OPTIONS ---------------- */
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.checkbox-label input {
+  margin-right: 5px;
+}
+
+.forgot-password {
+  font-size: 13px;
+  color: #4ba3ff;
+  text-decoration: none;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}
+
+/* ---------------- BUTTONS ---------------- */
+.btn-primary {
+  background-color: #4ba3ff;
+  color: #fff;
+  padding: 10px 0;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  font-size: 16px;
+  transition: background 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #3a8ddb;
+}
+
+.btn-google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ccc;
+  padding: 10px 0;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #fff;
+  font-size: 14px;
+}
+
+.btn-google:hover {
+  background: #f2f2f2;
+}
+
+.google-icon {
+  margin-right: 8px;
+}
+
+/* ---------------- MODAL FOOTER ---------------- */
+.modal-footer {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #555;
+  text-align: center;
+}
+
+.modal-footer span {
+  color: #4ba3ff;
+  cursor: pointer;
+}
+
+.modal-footer span:hover {
+  text-decoration: underline;
+}
+
+/* ---------------- RESPONSIVE ---------------- */
+@media (max-width: 450px) {
+  .modal-content {
+    width: 90%;
+    padding: 20px 15px;
+  }
+
+  .modal-header h2 {
+    font-size: 20px;
+  }
+
+  .btn-primary {
+    font-size: 14px;
+  }
+}
