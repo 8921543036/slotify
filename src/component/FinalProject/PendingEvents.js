@@ -20,7 +20,7 @@ function PendingEvents() {
 
   useEffect(() => {
     fetchEvents();
-  }, [filter]);
+  }, [filter,fetchEvents]);
 
   // 🔍 Search filter logic
   const filteredEvents = events.filter((ev) =>

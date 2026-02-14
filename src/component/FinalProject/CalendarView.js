@@ -24,7 +24,7 @@ function CalendarView() {
     };
 
     fetchEvents();
-  }, []);
+  }, [selectedDate]);
 
   // Filter events by selected date
   const filterEventsByDate = (allEvents, date) => {
