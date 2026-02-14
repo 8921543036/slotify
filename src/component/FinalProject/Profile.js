@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FaChevronDown } from "react-icons/fa";
-import "./Profile.css";
+import "./profile.css";
 
 function Profile({ user, onLogout }) {
   const [open, setOpen] = useState(false);
