@@ -7,7 +7,10 @@ function PendingEvents() {
   const [filter, setFilter] = useState("pending");
   const [search, setSearch] = useState("");
 
-  const fetchEvents = async () => {
+ 
+
+  useEffect(() => {
+     const fetchEvents = async () => {
     try {
       const res = await axios.get(
         `http://localhost:5000/api/events/status/${filter}`
@@ -17,10 +20,8 @@ function PendingEvents() {
       console.error(err);
     }
   };
-
-  useEffect(() => {
     fetchEvents();
-  }, [filter,fetchEvents]);
+  }, [filter]);
 
   // 🔍 Search filter logic
   const filteredEvents = events.filter((ev) =>
