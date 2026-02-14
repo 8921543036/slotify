@@ -1,0 +1,156 @@
+/* PAGE */
+.calendar-page {
+  min-height: 100vh;
+  background: #cfe8ff;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* CALENDAR CARD */
+.calendar-container {
+  background: #ffffff;
+  width: 100%;
+  max-width: 1100px;
+  padding: 30px;
+  border-radius: 20px;
+}
+
+/* TITLE */
+.calendar-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: #000000;
+  margin-bottom: 20px;
+}
+
+/* CALENDAR BASE */
+.react-calendar {
+  background: transparent;
+  border: none;
+  width: 100%;
+}
+
+/* NAVIGATION */
+.react-calendar__navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.react-calendar__navigation button {
+  background: #4ba3ff;
+  color: #ffffff;
+  border-radius: 10px;
+  padding: 6px 14px;
+  font-size: 18px;
+  border: none;
+}
+
+/* WEEKDAYS */
+.react-calendar__month-view__weekdays {
+  color: #0056b3;
+  font-weight: 600;
+}
+
+.react-calendar__month-view__weekdays abbr {
+  text-decoration: none;
+}
+
+/* GRID */
+.react-calendar__month-view__days {
+  display: grid !important;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 12px;
+}
+
+/* DATE BOX */
+.react-calendar__tile {
+  background: #ffffff;
+  border: 1px solid #cfe8ff;
+  border-radius: 16px;
+  height: 120px;
+  padding: 10px;
+  text-align: left;
+}
+
+/* DATE NUMBER */
+.react-calendar__tile abbr {
+  font-size: 14px;
+  color: #000000;
+}
+
+/* HOVER */
+.react-calendar__tile:hover {
+  background: #cfe8ff;
+}
+
+/* SELECTED */
+.react-calendar__tile--active {
+  outline: 2px solid #007bff;
+}
+
+/* EVENT DAY */
+.event-day {
+  border: 2px solid #007bff;
+}
+
+/* EVENTS INSIDE DATE */
+.tile-events {
+  margin-top: 6px;
+}
+
+.tile-event {
+  display: block;
+  background: #007bff;
+  color: #ffffff;
+  padding: 3px 6px;
+  border-radius: 6px;
+  font-size: 11px;
+  margin-top: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* EVENT LIST */
+.event-section {
+  width: 100%;
+  max-width: 1100px;
+  margin-top: 40px;
+}
+
+.no-events {
+  text-align: center;
+  color: #0056b3;
+}
+
+/* EVENT CARD */
+.event-card {
+  background: #ffffff;
+  border: 1px solid #cfe8ff;
+  padding: 18px;
+  border-radius: 16px;
+  margin-bottom: 14px;
+}
+
+.event-card h3 {
+  font-size: 16px;
+  color: #000000;
+}
+
+.event-card p {
+  font-size: 14px;
+  color: #0056b3;
+}
+
+.event-card button {
+  margin-top: 10px;
+  padding: 6px 16px;
+  border-radius: 20px;
+  background: #4ba3ff;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+}

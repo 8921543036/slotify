@@ -56,13 +56,15 @@ body {
 .btn--solid-white {
   background: white;
   color: var(--color-primary-blue);
+  padding: 13px 20px;
 }
 .btn--solid-white:hover {
   background: white;
 }
 .btn--outline-white {
-  background:#0056b3 ;
+  background:var(--color-dark-blue) ;
   color: white;
+  padding: 13px 20px;
 }
 .btn--outline-white:hover {
   background: #0056b3 ;
@@ -232,6 +234,11 @@ body {
 
 
 /* ---------------- ABOUT SECTION ---------------- */
+/* ============================= */
+/* WHAT WE DO – ANIMATION STYLES */
+/* ============================= */
+
+/* Section base */
 .what-we-do {
   background: white;
   color: black;
@@ -241,13 +248,19 @@ body {
   margin-top: -200px;
 }
 
+/* Title */
 .what-we-do__title {
   font-size: 32px;
   font-weight: 700;
   color: var(--color-secondary-blue);
   margin-bottom: 20px;
+
+  /* animation */
+  opacity: 0;
+  transform: translateY(30px);
 }
 
+/* Description */
 .what-we-do__description {
   max-width: 1000px;
   margin: 0 auto;
@@ -255,9 +268,13 @@ body {
   line-height: 1.9;
   text-align: center;
   color: #555;
+
+  /* animation */
+  opacity: 0;
+  transform: translateY(30px);
 }
 
-/* Show more button */
+/* Button */
 .what-we-do .btn--read-more {
   margin-top: 25px;
   padding: 12px 30px;
@@ -266,18 +283,63 @@ body {
   color: var(--color-secondary-blue);
   font-weight: 600;
   border-radius: 8px;
+  cursor: pointer;
+
+  /* animation */
+  opacity: 0;
+  transform: translateY(30px);
 }
+
+/* ===================== */
+/* ANIMATION ON SCROLL */
+/* ===================== */
+
+.what-we-do.show .what-we-do__title {
+  animation: fadeUp 0.6s ease forwards;
+}
+
+.what-we-do.show .what-we-do__description {
+  animation: fadeUp 0.6s ease forwards;
+  animation-delay: 0.2s;
+}
+
+.what-we-do.show .btn--read-more {
+  animation: fadeUp 0.6s ease forwards;
+  animation-delay: 0.4s;
+}
+
+/* ================= */
+/* KEYFRAMES */
+/* ================= */
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ================= */
+/* BUTTON HOVER */
+/* ================= */
 
 .what-we-do .btn--read-more:hover {
   background: var(--color-secondary-blue);
   color: white;
+  transform: translateY(-2px);
+  transition: all 0.3s ease;
 }
+
 
 /* ---------------- SERVICES SECTION ---------------- */
 .services {
   margin: 0 calc(-1 * var(--padding-x));
   padding: 80px var(--padding-x);
-  background:#e6f2ff;
+  
   text-align: center;
 }
 
@@ -287,6 +349,7 @@ body {
   font-weight: 700;
   color: black;
   margin-bottom: 40px;
+  color: var(--color-secondary-blue);
 }
 
 /* Cards container */
@@ -319,7 +382,7 @@ body {
   width: 80px;
   height: 80px;
   margin: 0 auto 20px;
-  background: #5AA9FF;
+  background: #007bff;
   border-radius: 8px;
   display: flex;
   justify-content: center;
@@ -328,8 +391,8 @@ body {
 
 /* Image */
 .service-card__image {
-  width: 45px;
-  height: 45px;
+  width: 60px;
+  height: 60px;
   object-fit: contain;
 }
 
@@ -350,6 +413,10 @@ body {
 
 
 /* ---------------- BOOK VENUE SECTION ---------------- */
+/* ============================= */
+/* BOOK VENUE SECTION */
+/* ============================= */
+
 .book-venue {
   margin: 0 calc(-1 * var(--padding-x));
   padding: 80px var(--padding-x);
@@ -357,11 +424,16 @@ body {
   text-align: center;
 }
 
+/* Title */
 .book-venue__title {
   font-size: 32px;
   color: var(--color-secondary-blue);
   font-weight: 700;
   margin-bottom: 60px;
+
+  /* animation */
+  opacity: 0;
+  transform: translateY(30px);
 }
 
 /* Cards container */
@@ -372,22 +444,28 @@ body {
   flex-wrap: wrap;
 }
 
-/* Card base */
+/* ============================= */
+/* CARD BASE */
+/* ============================= */
+
 .venue-card {
   width: 310px;
   height: 300px;
   padding: 30px 25px;
   border-radius: 16px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
-  transition: all 0.3s ease;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  /* POP animation base */
+  opacity: 0;
+  transform: scale(0.85) translateY(30px);
 }
 
 /* Blue card */
 .venue-card--blue {
-  background: #4ba3ff;
+  background: #007bff;
   color: white;
 }
 
@@ -397,18 +475,48 @@ body {
   color: #000;
 }
 
-/* Hover */
-.venue-card:hover {
-  transform: translateY(-6px);
+/* ============================= */
+/* SCROLL POP ANIMATION */
+/* ============================= */
+
+.book-venue.show .book-venue__title {
+  animation: fadeUp 0.6s ease forwards;
 }
 
-/* Title */
+/* Card stagger pop */
+.book-venue.show .venue-card:nth-child(1) {
+  animation: popUp 0.6s ease forwards;
+  animation-delay: 0.2s;
+}
+
+.book-venue.show .venue-card:nth-child(2) {
+  animation: popUp 0.6s ease forwards;
+  animation-delay: 0.4s;
+}
+
+.book-venue.show .venue-card:nth-child(3) {
+  animation: popUp 0.6s ease forwards;
+  animation-delay: 0.6s;
+}
+
+/* ============================= */
+/* HOVER EFFECT */
+/* ============================= */
+
+.venue-card:hover {
+  transform: translateY(-8px) scale(1.03);
+  transition: all 0.3s ease;
+}
+
+/* ============================= */
+/* CARD CONTENT */
+/* ============================= */
+
 .venue-card__title {
   font-size: 22px;
   font-weight: 700;
 }
 
-/* Subtitle */
 .venue-card__subtitle {
   font-size: 15px;
   margin-top: 10px;
@@ -416,21 +524,19 @@ body {
   opacity: 0.9;
 }
 
-/* Footer */
 .venue-card__footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-/* Action text */
 .venue-card__action {
   font-size: 16px;
   font-weight: 600;
   text-transform: lowercase;
 }
 
-/* Circular arrow button */
+/* Arrow circle */
 .venue-card__icon {
   width: 44px;
   height: 44px;
@@ -439,30 +545,53 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
   transition: 0.3s ease;
 }
 
-/* Arrow image */
 .venue-card__icon img {
   width: 18px;
   height: 18px;
 }
 
-/* Hover animation */
 .venue-card:hover .venue-card__icon {
-  transform: translateX(5px);
+  transform: translateX(6px);
 }
 
-/* White cards – blue arrow circle */
+/* White card arrow */
 .venue-card--white .venue-card__icon {
   background: #4ba3ff;
 }
 
-/* Make arrow white inside blue circle */
 .venue-card--white .venue-card__icon img {
   filter: brightness(0) invert(1);
 }
+
+/* ============================= */
+/* KEYFRAMES */
+/* ============================= */
+
+@keyframes popUp {
+  from {
+    opacity: 0;
+    transform: scale(0.85) translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 
 
 /* ---------------- CONTACT SECTION ---------------- */
@@ -558,7 +687,7 @@ body {
 .services {
   margin: 0 calc(-1 * var(--padding-x));
   padding: 30px var(--padding-x);
-  background: #e6f2ff;
+
   background-size: cover;
   text-align: center;
   color: white; /* Make text visible on background */
@@ -829,4 +958,3 @@ body {
     gap: 60px;
   }
 }
-

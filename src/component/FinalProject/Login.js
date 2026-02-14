@@ -1,95 +1,49 @@
 import React, { useState } from "react";
 import "./Login.css";
 
-function Login({ show, onClose, onLogin }) {
-  const [isSignUp, setIsSignUp] = useState(false);
-  const [name, setName] = useState("");
+function Login({ show, onClose, onOpenSignUp, onLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   if (!show) return null;
 
-  const handleLogin = () => {
-    if (!email || !password || (isSignUp && !name)) {
-      alert("Please fill all fields");
-      return;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    try {
+      const res = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message);
+
+      // ✅ IMPORTANT
+      onLogin(data.user);
+
+    } catch (err) {
+      setError(err.message);
     }
-
-    // Send user info to parent
-    onLogin({
-      name: isSignUp ? name : "John Doe", // default name if login
-      email,
-      role: "Student",
-      avatar: "https://via.placeholder.com/100", // optional avatar
-    });
-
-    onClose();
-    // Clear fields
-    setName("");
-    setEmail("");
-    setPassword("");
   };
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <button className="modal-close-icon" onClick={onClose}>
-          &times;
-        </button>
+    <div className="modal-overlay">
+      <div className="login-card">
+        <button onClick={onClose}>×</button>
+        <h2>Login</h2>
+        {error && <p>{error}</p>}
 
-        <div className="modal-header">
-          <h2>{isSignUp ? "Student Register" : "Student Login"}</h2>
-          <p>Please enter your student details.</p>
-        </div>
-
-        <form className="modal-form">
-          {isSignUp && (
-            <div className="input-group">
-              <input
-                type="text"
-                placeholder="Student Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-            </div>
-          )}
-
-          <div className="input-group">
-            <input
-              type="email"
-              placeholder="Student Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-
-          <div className="input-group">
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-
-          <button type="button" className="btn-primary" onClick={handleLogin}>
-            {isSignUp ? "Sign Up" : "Login"}
-          </button>
+        <form onSubmit={handleSubmit}>
+          <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
+          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
+          <button type="submit">Login</button>
         </form>
 
-        <div className="modal-footer">
-          {isSignUp ? (
-            <p>
-              Already have an account?{" "}
-              <span onClick={() => setIsSignUp(false)}>Login</span>
-            </p>
-          ) : (
-            <p>
-              Don't have an account?{" "}
-              <span onClick={() => setIsSignUp(true)}>Sign Up</span>
-            </p>
-          )}
-        </div>
+        <p onClick={onOpenSignUp}>Sign Up</p>
       </div>
     </div>
   );

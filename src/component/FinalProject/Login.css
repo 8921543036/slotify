@@ -1,162 +1,177 @@
-/* Login.css */
-
-/* The dark background overlay */
+/* ---------- Overlay ---------- */
 .modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.6);
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   z-index: 1000;
-  backdrop-filter: blur(3px);
+  backdrop-filter: blur(2px);
+  padding: 15px;
+  overflow-y: auto;
 }
 
-/* The white card - Reduced padding to remove vacant space */
-.modal-content {
-  background: white;
-  width: 380px; /* Slightly narrower */
-  padding: 25px 30px; /* Reduced padding */
-  border-radius: 16px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+/* ---------- Login Card ---------- */
+.login-card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 360px;
+  padding: 25px 20px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
   position: relative;
-  text-align: center;
-  animation: slideIn 0.3s ease-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: fadeIn 0.25s ease-in-out;
+  box-sizing: border-box;
 }
 
-@keyframes slideIn {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Close X button */
-.modal-close-icon {
+/* ---------- Close Button ---------- */
+.close-btn {
   position: absolute;
-  top: 15px;
-  right: 20px;
-  background: none;
+  top: 10px;
+  right: 12px;
   border: none;
-  font-size: 24px;
+  background: none;
+  font-size: 22px;
   cursor: pointer;
-  color: #888;
+  color: #555;
   transition: color 0.2s;
 }
 
-.modal-close-icon:hover {
+.close-btn:hover {
+  color: #f04e4e;
+}
+
+/* ---------- Heading ---------- */
+.login-card h2 {
+  font-size: 22px;
+  font-weight: 600;
   color: #333;
+  margin-bottom: 6px;
+  text-align: center;
 }
 
-/* Headers - Reduced margins */
-.modal-header h2 {
-  margin: 5px 0 5px 0;
-  font-size: 24px;
-  color: #333;
-}
-
-.modal-header p {
-  color: #666;
-  font-size: 13px;
-  margin-bottom: 20px; /* Reduced from 30px */
-}
-
-/* Inputs - Reduced spacing */
-.input-group {
-  margin-bottom: 12px; /* Reduced from 15px */
-}
-
-.input-group input {
-  width: 100%;
-  padding: 10px 15px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+.subtitle {
   font-size: 14px;
-  outline: none;
-  box-sizing: border-box;
-  background-color: #f9f9f9;
+  color: #777;
+  margin-bottom: 18px;
+  text-align: center;
 }
 
-.input-group input:focus {
-  border-color: #4481eb;
-  background-color: #fff;
-}
-
-/* Options (Remember me / Forgot pass) */
-.form-options {
+/* ---------- Form ---------- */
+.login-card form {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 12px;
-  margin-bottom: 15px;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* ---------- Inputs ---------- */
+.login-card input {
+  width: 100%;
+  padding: 10px 12px; /* smaller inputs */
+  margin-bottom: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  box-sizing: border-box;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.login-card input:focus {
+  outline: none;
+  border-color: #4f8df7;
+  box-shadow: 0 0 6px rgba(79, 141, 247, 0.3);
+}
+
+.login-card input::placeholder {
+  color: #aaa;
+  font-size: 13px;
+}
+
+/* ---------- Submit Button ---------- */
+.login-card button[type="submit"] {
+  width: 100%;
+  padding: 11px;
+  background-color: #4f8df7;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 6px;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.login-card button[type="submit"]:hover {
+  background-color: #3a78e0;
+}
+
+.login-card button[type="submit"]:disabled {
+  background-color: #aac4f5;
+  cursor: not-allowed;
+}
+
+/* ---------- Error Message ---------- */
+.login-card p {
+  color: #f04e4e;
+  font-size: 13px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* ---------- Footer Text ---------- */
+.signup-text {
+  text-align: center;
+  font-size: 13px;
+  margin-top: 15px;
   color: #555;
 }
 
-.checkbox-label {
-  display: flex;
-  align-items: center;
-  gap: 5px;
+.signup-text span {
+  color: #4f8df7;
+  font-weight: 500;
   cursor: pointer;
+  transition: color 0.2s;
 }
 
-.forgot-password {
-  color: #4481eb;
-  text-decoration: none;
-  font-weight: 600;
+.signup-text span:hover {
+  color: #3a78e0;
 }
 
-/* Buttons */
-.btn-primary {
-  width: 100%;
-  padding: 10px;
-  background-color: #4481eb;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  margin-bottom: 10px;
-  transition: background 0.3s;
+/* ---------- Fade-in Animation ---------- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
-.btn-primary:hover {
-  background-color: #3367d6;
-}
+/* ---------- Responsive ---------- */
+@media screen and (max-width: 400px) {
+  .login-card {
+    padding: 20px 16px;
+    width: 100%;
+  }
 
-.btn-google {
-  width: 100%;
-  padding: 10px;
-  background-color: white;
-  color: #333;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
+  .login-card input {
+    padding: 9px 10px;
+    font-size: 13px;
+  }
 
-.google-icon {
-  font-weight: bold;
-  color: #ea4335;
-  font-size: 18px;
-}
+  .login-card button[type="submit"] {
+    padding: 10px;
+    font-size: 13px;
+  }
 
-/* Footer Toggle Text */
-.modal-footer {
-  margin-top: 15px;
-  font-size: 13px;
-  color: #666;
-}
-
-.modal-footer span {
-  color: #4481eb;
-  font-weight: bold;
-  cursor: pointer;
-  margin-left: 5px;
+  .signup-text {
+    font-size: 12px;
+  }
 }

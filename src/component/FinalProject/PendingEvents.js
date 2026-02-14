@@ -1,87 +1,86 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import "./PendingEvents.css";
 
 function PendingEvents() {
   const [events, setEvents] = useState([]);
-  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [filter, setFilter] = useState("pending");
+  const [search, setSearch] = useState("");
 
-  // Load pending events
-  useEffect(() => {
-    const storedEvents = JSON.parse(localStorage.getItem("events")) || [];
-    const pendingEvents = storedEvents.filter(
-      (event) => event.status === "Pending"
-    );
-    setEvents(pendingEvents);
-  }, []);
-
-  // Approve / Reject handler
-  const updateStatus = (id, newStatus) => {
-    const storedEvents = JSON.parse(localStorage.getItem("events")) || [];
-
-    const updatedEvents = storedEvents.map((event) =>
-      event.id === id ? { ...event, status: newStatus } : event
-    );
-
-    localStorage.setItem("events", JSON.stringify(updatedEvents));
-
-    setEvents(updatedEvents.filter((event) => event.status === "Pending"));
-    setSelectedEvent(null);
+  const fetchEvents = async () => {
+    try {
+      const res = await axios.get(
+        `http://localhost:5000/api/events/status/${filter}`
+      );
+      setEvents(res.data);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
+  useEffect(() => {
+    fetchEvents();
+  }, [filter]);
+
+  // 🔍 Search filter logic
+  const filteredEvents = events.filter((ev) =>
+    `${ev.eventName} ${ev.clubName} ${ev.description}`
+      .toLowerCase()
+      .includes(search.toLowerCase())
+  );
+
   return (
-    <div className="pending-page">
-      <h2>Pending Events</h2>
+    <div className="pending-container">
+      {/* Filters */}
+      <div className="filter-buttons">
+        <button
+          className={filter === "pending" ? "active" : ""}
+          onClick={() => setFilter("pending")}
+        >
+          Pending
+        </button>
+        <button
+          className={filter === "accepted" ? "active" : ""}
+          onClick={() => setFilter("accepted")}
+        >
+          Accepted
+        </button>
+        <button
+          className={filter === "rejected" ? "active" : ""}
+          onClick={() => setFilter("rejected")}
+        >
+          Rejected
+        </button>
+      </div>
 
-      {events.length === 0 ? (
-        <p className="empty">No pending events</p>
-      ) : (
-        <div className="event-list">
-          {events.map((event) => (
-            <div className="event-card" key={event.id}>
-              <h3>{event.title}</h3>
-              <p>{event.shortDesc}</p>
+      {/* 🔍 Search Box */}
+      <div className="search-box">
+        <input
+          type="text"
+          placeholder="Search by event or club..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+      </div>
 
-              <div className="card-buttons">
-                <button onClick={() => setSelectedEvent(event)}>
-                  View More
-                </button>
-
-                <button
-                  className="approve"
-                  onClick={() => updateStatus(event.id, "Approved")}
-                >
-                  Approve
-                </button>
-
-                <button
-                  className="reject"
-                  onClick={() => updateStatus(event.id, "Rejected")}
-                >
-                  Reject
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
+      {/* Empty State */}
+      {filteredEvents.length === 0 && (
+        <p>No {filter} events found</p>
       )}
 
-      {/* View More Modal */}
-      {selectedEvent && (
-        <div className="modal">
-          <div className="modal-content">
-            <h3>{selectedEvent.title}</h3>
-            <p>{selectedEvent.fullDesc}</p>
-
-            <p><strong>Date:</strong> {selectedEvent.date}</p>
-            <p><strong>Time:</strong> {selectedEvent.time}</p>
-            <p><strong>Venue:</strong> {selectedEvent.venue}</p>
-
-            <button className="close" onClick={() => setSelectedEvent(null)}>
-              Close
-            </button>
-          </div>
+      {/* Event Cards */}
+      {filteredEvents.map((ev) => (
+        <div key={ev._id} className="pending-card">
+          <h3>{ev.eventName}</h3>
+          <p>{ev.description}</p>
+          <p><b>Club:</b> {ev.clubName}</p>
+          <p><b>Date:</b> {ev.date}</p>
+          <p><b>Time:</b> {ev.startTime} - {ev.endTime}</p>
+          <span className={`badge ${ev.status}`}>
+            {ev.status.toUpperCase()}
+          </span>
         </div>
-      )}
+      ))}
     </div>
   );
 }

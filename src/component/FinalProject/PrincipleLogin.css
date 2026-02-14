@@ -1,4 +1,4 @@
-/* ---------------- MODAL OVERLAY ---------------- */
+/* Modal overlay */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -10,168 +10,136 @@
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  padding: 10px; /* ensures spacing on small screens */
 }
 
-/* ---------------- MODAL CONTENT ---------------- */
-.modal-content {
-  background: #fff;
-  width: 400px;
-  max-width: 90%;
-  padding: 30px 25px;
+/* Card container */
+.signup-card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 380px; /* slightly smaller card */
+  padding: 25px 20px;
   border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   position: relative;
+  text-align: center;
   animation: fadeIn 0.3s ease-in-out;
+  box-sizing: border-box;
 }
 
-/* Fade-in animation */
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-/* ---------------- MODAL HEADER ---------------- */
-.modal-header h2 {
-  margin: 0 0 5px;
-  font-size: 24px;
-  color: #333;
-}
-
-.modal-header p {
-  font-size: 14px;
-  color: #555;
-}
-
-/* ---------------- CLOSE BUTTON ---------------- */
-.modal-close-icon {
+/* Close button */
+.close-btn {
   position: absolute;
-  top: 12px;
-  right: 15px;
-  font-size: 24px;
-  color: #333;
+  top: 10px;
+  right: 12px;
+  background: transparent;
   border: none;
-  background: none;
+  font-size: 22px;
   cursor: pointer;
+  color: #333;
   transition: color 0.2s;
 }
 
-.modal-close-icon:hover {
-  color: #ff4d4f;
+.close-btn:hover {
+  color: #ff4d4d;
 }
 
-/* ---------------- FORM ---------------- */
-.modal-form {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
+/* Heading */
+.signup-card h2 {
+  margin-bottom: 18px;
+  color: #333;
+  font-size: 22px;
 }
 
-.input-group {
-  margin-bottom: 15px;
-}
-
-.input-group input {
-  width: 100%;
-  padding: 10px 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+/* Error message */
+.error {
+  color: #ff4d4d;
+  margin-bottom: 12px;
+  font-weight: 500;
   font-size: 14px;
-  transition: border 0.2s;
+  text-align: left;
 }
 
-.input-group input:focus {
+/* Form inputs */
+.signup-card form input {
+  width: 100%;
+  padding: 10px 12px; /* slightly smaller height */
+  margin: 6px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
   outline: none;
-  border-color: #4ba3ff;
+  font-size: 13px; /* slightly smaller font */
+  transition: border 0.2s;
+  box-sizing: border-box;
 }
 
-/* ---------------- FORM OPTIONS ---------------- */
-.form-options {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
+.signup-card form input:focus {
+  border-color: #007bff;
 }
 
-.checkbox-label input {
-  margin-right: 5px;
-}
-
-.forgot-password {
-  font-size: 13px;
-  color: #4ba3ff;
-  text-decoration: none;
-}
-
-.forgot-password:hover {
-  text-decoration: underline;
-}
-
-/* ---------------- BUTTONS ---------------- */
-.btn-primary {
-  background-color: #4ba3ff;
-  color: #fff;
-  padding: 10px 0;
+/* Submit button */
+.signup-card form button[type="submit"] {
+  width: 100%;
+  padding: 10px; /* smaller height */
+  margin-top: 10px;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
+  background-color: #007bff;
+  color: white;
+  font-size: 15px;
   cursor: pointer;
-  margin-bottom: 10px;
-  font-size: 16px;
   transition: background 0.3s;
 }
 
-.btn-primary:hover {
-  background-color: #3a8ddb;
+.signup-card form button[type="submit"]:hover {
+  background-color: #0056b3;
 }
 
-.btn-google {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid #ccc;
-  padding: 10px 0;
-  border-radius: 8px;
+/* Switch to login text */
+.switch-login {
+  margin-top: 12px;
+  color: #007bff;
   cursor: pointer;
-  background: #fff;
-  font-size: 14px;
+  font-size: 13px;
 }
 
-.btn-google:hover {
-  background: #f2f2f2;
-}
-
-.google-icon {
-  margin-right: 8px;
-}
-
-/* ---------------- MODAL FOOTER ---------------- */
-.modal-footer {
-  margin-top: 15px;
-  font-size: 14px;
-  color: #555;
-  text-align: center;
-}
-
-.modal-footer span {
-  color: #4ba3ff;
-  cursor: pointer;
-}
-
-.modal-footer span:hover {
+.switch-login:hover {
   text-decoration: underline;
 }
 
-/* ---------------- RESPONSIVE ---------------- */
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Responsive adjustments */
 @media (max-width: 450px) {
-  .modal-content {
-    width: 90%;
+  .signup-card {
     padding: 20px 15px;
   }
 
-  .modal-header h2 {
+  .signup-card h2 {
     font-size: 20px;
   }
 
-  .btn-primary {
+  .signup-card form input {
+    padding: 9px 10px;
+    font-size: 13px;
+  }
+
+  .signup-card form button[type="submit"] {
+    padding: 9px;
     font-size: 14px;
+  }
+
+  .switch-login {
+    font-size: 12px;
   }
 }

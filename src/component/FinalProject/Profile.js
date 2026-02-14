@@ -1,44 +1,44 @@
 import React, { useState, useRef, useEffect } from "react";
-import { FaUserCircle, FaChevronDown } from "react-icons/fa";
-import "./profile.css"; // make sure to style your profile dropdown
+import { FaChevronDown } from "react-icons/fa";
+import "./Profile.css";
 
-function ProfileIcon({ user, onLogout }) {
+function Profile({ user, onLogout }) {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
 
   useEffect(() => {
-    const close = (e) => {
+    const handleClickOutside = (e) => {
       if (ref.current && !ref.current.contains(e.target)) {
         setOpen(false);
       }
     };
-    document.addEventListener("mousedown", close);
-    return () => document.removeEventListener("mousedown", close);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // Function to get first two letters of email
+  const getEmailInitials = (email) => {
+    if (!email) return "";
+    return email.slice(0, 2).toUpperCase();
+  };
+
   return (
-    <div className="nav__right" ref={ref}>
+    <div className="profile-wrapper" ref={ref}>
+      {/* Navbar avatar */}
       <div className="profile-trigger" onClick={() => setOpen(!open)}>
-        <FaUserCircle className="profile-icon" />
+        <div className="avatar-initials">{getEmailInitials(user.email)}</div>
         <FaChevronDown className={`arrow ${open ? "rotate" : ""}`} />
       </div>
 
       {open && (
         <div className="profile-popup">
           <div className="profile-header">
-            <img
-              src={user.avatar || "https://via.placeholder.com/50"}
-              alt="Avatar"
-              className="popup-avatar"
-            />
+            <div className="popup-avatar-initials">{getEmailInitials(user.email)}</div>
             <h4>{user.name}</h4>
-            <p>{user.role}</p>
+            <p>{user.role || "Student"}</p>
           </div>
-
           <ul className="profile-menu">
-            <li>My Profile</li>
-            <li>My Bookings</li>
-            <li>Settings</li>
+           
             <li className="logout" onClick={onLogout}>
               Logout
             </li>
@@ -49,6 +49,4 @@ function ProfileIcon({ user, onLogout }) {
   );
 }
 
-export default ProfileIcon;
-
-
+export default Profile;

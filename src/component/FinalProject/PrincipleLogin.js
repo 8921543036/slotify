@@ -1,89 +1,105 @@
 import React, { useState } from "react";
-import "./PrincipleLogin.css"; // Can reuse the same modal CSS
+import "./PrincipleLogin.css";
 
-function PrincipleLogin({ show, onClose }) {
-  const [isSignUp, setIsSignUp] = useState(false);
+function PrincipleLogin({ show, onClose, onOpenLogin, onLogin }) {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    admissionNumber: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const [error, setError] = useState("");
 
   if (!show) return null;
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    // ✅ Password match validation
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    try {
+      const res = await fetch("http://localhost:5000/api/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.message || "Signup failed");
+
+      // ✅ Auto login after signup
+      onLogin(data.user);
+
+      // ✅ Clear form
+      setFormData({
+        name: "",
+        email: "",
+        admissionNumber: "",
+        password: "",
+        confirmPassword: "",
+      });
+
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <button className="modal-close-icon" onClick={onClose}>
-          &times;
-        </button>
+    <div className="modal-overlay">
+      <div className="signup-card">
+        <button className="close-btn" onClick={onClose}>×</button>
+        <h2>Sign Up</h2>
+        {error && <p className="error">{error}</p>}
 
-        <div className="modal-header">
-          <h2>{isSignUp ? "Principle Register" : "Principle Login"}</h2>
-          <p>Please enter your administrative credentials.</p>
-        </div>
-
-        <form className="modal-form">
-          {isSignUp && (
-            <div className="input-group">
-              <input type="text" placeholder="Principle Name" />
-            </div>
-          )}
-
-          <div className="input-group">
-            <input type="email" placeholder="Official Email" />
-          </div>
-
-          {isSignUp && (
-            <div className="input-group">
-              <input type="text" placeholder="Employee ID / Admin Code" />
-            </div>
-          )}
-
-          <div className="input-group">
-            <input type="password" placeholder="Password" />
-          </div>
-
-          {isSignUp && (
-            <div className="input-group">
-              <input type="password" placeholder="Confirm Password" />
-            </div>
-          )}
-
-          <div className="form-options">
-            {isSignUp ? (
-              <label className="checkbox-label">
-                <input type="checkbox" /> I agree with Privacy Policy
-              </label>
-            ) : (
-              <>
-                <label className="checkbox-label">
-                  <input type="checkbox" /> Remember Me
-                </label>
-                <a href="#" className="forgot-password">
-                  Forget Password?
-                </a>
-              </>
-            )}
-          </div>
-
-          <button type="button" className="btn-primary">
-            {isSignUp ? "Sign Up" : "Login"}
-          </button>
-
-          <button type="button" className="btn-google">
-            <span className="google-icon">G</span> Sign In With Google
-          </button>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="Name"
+            value={formData.name}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            required
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            value={formData.email}
+            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            required
+          />
+          <input
+            type="text"
+            placeholder="Admission No"
+            value={formData.admissionNumber}
+            onChange={(e) => setFormData({ ...formData, admissionNumber: e.target.value })}
+            required
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+            required
+          />
+          <input
+            type="password"
+            placeholder="Confirm Password"
+            value={formData.confirmPassword}
+            onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+            required
+          />
+          <button type="submit">Sign Up</button>
         </form>
 
-        <div className="modal-footer">
-          {isSignUp ? (
-            <p>
-              Already have an account?{" "}
-              <span onClick={() => setIsSignUp(false)}>Login</span>
-            </p>
-          ) : (
-            <p>
-              Don't have an account?{" "}
-              <span onClick={() => setIsSignUp(true)}>Sign Up</span>
-            </p>
-          )}
-        </div>
+        <p className="switch-login" onClick={onOpenLogin}>
+          Already have an account? Login
+        </p>
       </div>
     </div>
   );

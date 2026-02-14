@@ -1,0 +1,62 @@
+.admin-dashboard {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.admin-dashboard h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.event-card {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  background-color: #fff;
+}
+
+.event-card h3 {
+  margin-top: 0;
+  color: #222;
+}
+
+.event-card p {
+  margin: 5px 0;
+  color: #555;
+}
+
+.action-buttons {
+  margin-top: 10px;
+}
+
+.action-buttons button {
+  padding: 7px 15px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #fff;
+  transition: 0.2s;
+}
+
+.action-buttons .accept {
+  background-color: #28a745;
+}
+
+.action-buttons .accept:hover {
+  background-color: #218838;
+}
+
+.action-buttons .reject {
+  background-color: #dc3545;
+}
+
+.action-buttons .reject:hover {
+  background-color: #c82333;
+}

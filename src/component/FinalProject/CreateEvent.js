@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "./CreateEvent.css";
 
 function CreateEvent() {
@@ -8,13 +9,15 @@ function CreateEvent() {
   const [formData, setFormData] = useState({
     eventName: "",
     clubName: "",
+    venue: "",
     date: "",
     startTime: "",
     endTime: "",
-    venue: "",
     description: "",
-    poster: null,
   });
+
+  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -23,109 +26,151 @@ function CreateEvent() {
     });
   };
 
-  const handleFileChange = (e) => {
-    setFormData({
-      ...formData,
-      poster: e.target.files[0],
-    });
+  const validate = () => {
+    const newErrors = {};
+
+    if (!formData.eventName) newErrors.eventName = "Event name is required";
+    if (!formData.clubName) newErrors.clubName = "Club name is required";
+    if (!formData.venue) newErrors.venue = "Venue is required";
+    if (!formData.date) newErrors.date = "Date is required";
+    if (!formData.startTime) newErrors.startTime = "Start time is required";
+    if (!formData.endTime) newErrors.endTime = "End time is required";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Event Data:", formData);
-    alert("Event submitted for approval!");
-    navigate("/");
+    if (!validate()) return;
+
+    setLoading(true);
+
+    try {
+      await axios.post("http://localhost:5000/api/events/create", {
+        eventName: formData.eventName,
+        clubName: formData.clubName,
+        venue: formData.venue,
+        date: formData.date,
+        startTime: formData.startTime,
+        endTime: formData.endTime,
+        description: formData.description,
+      });
+
+      alert("Event submitted for approval!");
+      navigate("/pending-events");
+    } catch (error) {
+      alert("Failed to create event");
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="create-event-page">
       <div className="create-event-card">
-        {/* Header */}
-        <div className="header">
-          <span className="back-arrow" onClick={() => navigate(-1)}>←</span>
-          <h2>Create Event</h2>
-        </div>
+        <h2>Create Event</h2>
+        <p className="subtitle">
+          Fill in the details to request a venue booking
+        </p>
 
-        {/* Form */}
-        <form className="form" onSubmit={handleSubmit}>
-          <input
-            type="text"
-            name="eventName"
-            placeholder="Event Name"
-            value={formData.eventName}
-            onChange={handleChange}
-            required
-          />
+        <form onSubmit={handleSubmit} className="form">
 
-          <input
-            type="text"
-            name="clubName"
-            placeholder="Club Name"
-            value={formData.clubName}
-            onChange={handleChange}
-            required
-          />
+          {/* Event Name */}
+          <div className="field">
+            <input
+              type="text"
+              name="eventName"
+              placeholder="Event Name"
+              value={formData.eventName}
+              onChange={handleChange}
+              className={errors.eventName ? "error" : ""}
+            />
+            {errors.eventName && <span>{errors.eventName}</span>}
+          </div>
 
-          <div className="row">
+          {/* Club Name */}
+          <div className="field">
+            <input
+              type="text"
+              name="clubName"
+              placeholder="Club / Organization Name"
+              value={formData.clubName}
+              onChange={handleChange}
+              className={errors.clubName ? "error" : ""}
+            />
+            {errors.clubName && <span>{errors.clubName}</span>}
+          </div>
+
+          {/* Venue */}
+          <div className="field">
+            <input
+              type="text"
+              name="venue"
+              placeholder="Venue"
+              value={formData.venue}
+              onChange={handleChange}
+              className={errors.venue ? "error" : ""}
+            />
+            {errors.venue && <span>{errors.venue}</span>}
+          </div>
+
+          {/* Date */}
+          <div className="field">
             <input
               type="date"
               name="date"
               value={formData.date}
               onChange={handleChange}
-              required
+              className={errors.date ? "error" : ""}
             />
-            <input
-              type="time"
-              name="startTime"
-              value={formData.startTime}
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="time"
-              name="endTime"
-              value={formData.endTime}
-              onChange={handleChange}
-              required
-            />
+            {errors.date && <span>{errors.date}</span>}
           </div>
 
-          <input
-            type="text"
-            name="venue"
-            placeholder="Venue"
-            value={formData.venue}
-            onChange={handleChange}
-            required
-          />
+          {/* Time */}
+          <div className="row">
+            <div className="field">
+              <input
+                type="time"
+                name="startTime"
+                value={formData.startTime}
+                onChange={handleChange}
+                className={errors.startTime ? "error" : ""}
+              />
+              {errors.startTime && <span>{errors.startTime}</span>}
+            </div>
 
+            <div className="field">
+              <input
+                type="time"
+                name="endTime"
+                value={formData.endTime}
+                onChange={handleChange}
+                className={errors.endTime ? "error" : ""}
+              />
+              {errors.endTime && <span>{errors.endTime}</span>}
+            </div>
+          </div>
+
+          {/* Description */}
           <textarea
             name="description"
-            placeholder="Description"
+            placeholder="Describe your event..."
             value={formData.description}
             onChange={handleChange}
           />
 
-          {/* Upload Poster */}
-          <label className="upload">
-            <div className="upload-icon">🖼</div>
-            <span>upload poster photo</span>
-            <input type="file" hidden onChange={handleFileChange} />
-          </label>
-
           {/* Buttons */}
           <div className="buttons">
-            <button
-              type="button"
-              className="cancel"
-              onClick={() => navigate(-1)}
-            >
-              cancel
+            <button type="button" className="cancel" onClick={() => navigate(-1)}>
+              Cancel
             </button>
-            <button type="submit" className="submit">
-              Submit
+            <button type="submit" className="submit" disabled={loading}>
+              {loading ? "Submitting..." : "Create Event"}
             </button>
           </div>
+
         </form>
       </div>
     </div>
@@ -133,5 +178,3 @@ function CreateEvent() {
 }
 
 export default CreateEvent;
-
-

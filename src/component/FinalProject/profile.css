@@ -1,31 +1,41 @@
-/* ================= RESET ================= */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-/* ================= NAV RIGHT ================= */
+/* ---------------- Container ---------------- */
 .nav__right {
   position: relative;
   display: flex;
   align-items: center;
 }
 
-/* ================= PROFILE TRIGGER ================= */
+/* ---------------- Click trigger ---------------- */
 .profile-trigger {
   display: flex;
   align-items: center;
   gap: 6px;
   cursor: pointer;
-  color: #000;
+  color: #333;
 }
 
-.profile-icon {
-  font-size: 34px;
+/* ---------------- Navbar Small Avatar ---------------- */
+.avatar-initials {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #4caf50;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.3s ease;
 }
 
+.avatar-initials:hover {
+  background-color: #45a049;
+}
+
+/* ---------------- Arrow ---------------- */
 .arrow {
   font-size: 14px;
   transition: transform 0.3s ease;
@@ -35,71 +45,113 @@
   transform: rotate(180deg);
 }
 
-/* ================= PROFILE POPUP ================= */
+/* ---------------- Dropdown box ---------------- */
 .profile-popup {
   position: absolute;
-  top: 60px;
+  top: 55px;
   right: 0;
-  width: 230px;
+  width: 260px;
   background: #ffffff;
   border-radius: 12px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-  z-index: 1000;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
   overflow: hidden;
+  animation: fadeSlide 0.25s ease;
+  z-index: 1000;
 }
 
-/* ================= PROFILE HEADER ================= */
+/* Animation */
+@keyframes fadeSlide {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------------- Popup Header ---------------- */
 .profile-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+  background: linear-gradient(135deg, #3f87ff, #5fc3ff);
+  color: #fff;
   text-align: center;
-  padding: 18px;
-  background: #f4f6fa;
 }
 
-.popup-avatar {
-  font-size: 48px;
-  color: #555;
+/* Popup avatar initials */
+.popup-avatar-initials {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background-color: #ffffff33;
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #fff;
+  margin-bottom: 8px;
+  user-select: none;
 }
 
+/* Header text */
 .profile-header h4 {
-  margin-top: 8px;
+  margin: 4px 0 0;
   font-size: 16px;
-  font-weight: 600;
 }
 
 .profile-header p {
-  font-size: 13px;
-  color: #777;
+  margin: 2px 0 0;
+  font-size: 12px;
+  opacity: 0.9;
 }
 
-/* ================= PROFILE MENU ================= */
+/* ---------------- Email & Password Info ---------------- */
+.profile-info {
+  padding: 10px 16px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.info-row .label {
+  font-weight: 500;
+  color: #555;
+}
+
+.info-row .value {
+  font-weight: 400;
+  color: #333;
+}
+
+/* ---------------- Menu ---------------- */
 .profile-menu {
   list-style: none;
+  padding: 8px 0;
+  margin: 0;
 }
 
 .profile-menu li {
-  padding: 12px 18px;
+  padding: 10px 18px;
   font-size: 14px;
+  color: #333;
   cursor: pointer;
   transition: background 0.2s ease;
 }
 
 .profile-menu li:hover {
-  background: #f1f3f8;
+  background: #f2f5ff;
 }
 
 .profile-menu .logout {
   color: #e53935;
-  font-weight: 600;
+  font-weight: 500;
 }
 
-/* ================= RESPONSIVE ================= */
-@media (max-width: 768px) {
-  .profile-popup {
-    right: -10px;
-    width: 200px;
-  }
-
-  .profile-icon {
-    font-size: 30px;
-  }
+.profile-menu .logout:hover {
+  background: #ffeaea;
 }
